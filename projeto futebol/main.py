@@ -1,6 +1,6 @@
 import tkinter
 from tkinter import CENTER, INSERT, Button, scrolledtext
-from turtle import pos, update
+
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import math
@@ -23,8 +23,15 @@ class Campo(pygame.sprite.Sprite):
     def update(self):
         self.image = self.sprite_campo[0]
 
-class Robo:
+class Robo(pygame.sprite.Sprite):
     def __init__(self, posx_init, posy_init):
+        pygame.sprite.Sprite.__init__(self)
+        self.sprite_robo = []
+        self.sprite_robo.append(pygame.image.load('robo.png'))
+        self.image = self.sprite_robo[0]
+        # self.image = pygame.transform.scale(self.image, (18*10, 18*10))
+        self.rect = self.image.get_rect()
+        self.rect.center = (100*posx_init, -100*posy_init+600)
         #variaveis de aceleracao normal, no eixo x e y
         self.aceleracao = 0
         self.ax = 0
@@ -38,16 +45,10 @@ class Robo:
         #indice pra acessar as listas
         self.i = 0
 
-    def grafico(x, y, titulo="Gráfico", cor='blue', xlabel="CX", ylabel="CY"):
-        plt.show(block=False)
-        figure = plt.figure(figsize=(6, 4.5), dpi=100)
-        figure.add_subplot(111).plot(x, y, color=cor)
-        chart = FigureCanvasTkAgg(figure, janela)
-        chart.get_tk_widget().place(anchor=CENTER, relx=0.5, rely=0.47)
-        plt.title(titulo)
-        plt.xlabel(xlabel)
-        plt.ylabel(ylabel)
-        plt.close("all")
+    def update(self):
+        self.rect.center = (100*posx_robo[robo.i], -100*posy_robo[robo.i]+600)
+        self.image = self.sprite_robo[0]
+        # self.image = pygame.transform.scale(self.image, (18*10, 18*10))
     
     def perseguir(self):
         #multiplica a aceleracao por 20 milésimos de segundo pq esse é o tempo de cada posicao da bola
@@ -101,8 +102,24 @@ class Robo:
         self.posy += self.vely
 
 todas_as_sprites = pygame.sprite.Group()
+
+robo = Robo(1, 5)
 campo = Campo()
 todas_as_sprites.add(campo)
+todas_as_sprites.add(robo)
+
+posx_robo = []
+posy_robo = []
+def grafico(x, y, titulo="Gráfico", cor='blue', xlabel="CX", ylabel="CY"):
+        plt.show(block=False)
+        figure = plt.figure(figsize=(6, 4.5), dpi=100)
+        figure.add_subplot(111).plot(x, y, color=cor)
+        chart = FigureCanvasTkAgg(figure, janela)
+        chart.get_tk_widget().place(anchor=CENTER, relx=0.5, rely=0.47)
+        plt.title(titulo)
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
+        plt.close("all")
 
 def anim():
     pygame.init()
@@ -125,7 +142,7 @@ def anim():
         todas_as_sprites.draw(tela)
         todas_as_sprites.update()
 
-        des_robo = pygame.draw.rect(tela, (255,0,0), (100*posx_robo[robo.i], -100*posy_robo[robo.i]+altura, (180/1000)*100, (180/1000)*100))
+        # des_robo = pygame.draw.rect(tela, (255,0,0), (100*posx_robo[robo.i], -100*posy_robo[robo.i]+altura, (180/1000)*100, (180/1000)*100))
         des_bola = pygame.draw.rect(tela, (0,255,0), (100*pos_x[robo.i], -100*pos_y[robo.i]+altura, (21/1000)*500, (21/1000)*500))
 
         
@@ -136,24 +153,24 @@ def anim():
 
 
 def grafico1():
-    Robo.grafico(pos_x, pos_y, "Trajetória da Bola", 'red', "Px", "Py")
+    grafico(pos_x, pos_y, "Trajetória da Bola", 'red', "Px", "Py")
 
 
 def grafico2():
-    Robo.grafico(tempo, pos_x, "Posição(x) da Bola", 'blue')
+    grafico(tempo, pos_x, "Posição(x) da Bola", 'blue')
 
 
 def grafico3():
-    Robo.grafico(tempo, pos_y, "Posição(y) da Bola", 'green')
+    grafico(tempo, pos_y, "Posição(y) da Bola", 'green')
 
 def grafico4():
-    Robo.grafico(posx_robo, posy_robo, "Trajetoria do robo", 'purple')
+    grafico(posx_robo, posy_robo, "Trajetoria do robo", 'purple')
 
 def grafico5():
-    Robo.grafico(tempo_robo, posx_robo, "Posição(x) do Robô", 'red')
+    grafico(tempo_robo, posx_robo, "Posição(x) do Robô", 'red')
 
 def grafico6():
-    Robo.grafico(tempo_robo, posy_robo, "Posição(y) do Robo", 'green')
+    grafico(tempo_robo, posy_robo, "Posição(y) do Robo", 'green')
 
 
 # Criação da Janela + Interface #
@@ -162,7 +179,7 @@ janela = tkinter.Tk()
 
 janela.title("Robo artilheiro")
 
-janela.geometry("800x600")
+janela.geometry("1200x600")
 
 # campo_pos = scrolledtext.ScrolledText(janela, width=95, height=4)
 # campo_pos.place(relx=0.5, rely=0.93, anchor=CENTER)
