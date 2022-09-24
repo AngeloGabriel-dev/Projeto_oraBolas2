@@ -1,3 +1,4 @@
+from time import sleep
 import tkinter
 from tkinter import CENTER, INSERT, Button, scrolledtext
 
@@ -27,8 +28,10 @@ class Robo(pygame.sprite.Sprite):
     def __init__(self, posx_init, posy_init):
         pygame.sprite.Sprite.__init__(self)
         self.sprite_robo = []
+        self.angulo = 0
         self.sprite_robo.append(pygame.image.load('robo.png'))
         self.image = self.sprite_robo[0]
+        
         # self.image = pygame.transform.scale(self.image, (18*10, 18*10))
         self.rect = self.image.get_rect()
         self.rect.center = (100*posx_init, -100*posy_init+600)
@@ -48,6 +51,8 @@ class Robo(pygame.sprite.Sprite):
     def update(self):
         self.rect.center = (100*posx_robo[robo.i], -100*posy_robo[robo.i]+600)
         self.image = self.sprite_robo[0]
+        
+        self.image = pygame.transform.rotate(self.image, angulos_robo[robo.i])
         # self.image = pygame.transform.scale(self.image, (18*10, 18*10))
     
     def perseguir(self):
@@ -67,6 +72,7 @@ class Robo(pygame.sprite.Sprite):
         #encontra o cos e seno
         self.cos = (pos_x[self.i] - self.posx)/self.distancia
         self.sen = (pos_y[self.i] - self.posy)/self.distancia
+        self.angulo = math.degrees(math.atan(self.sen/self.cos))
 
         #multiplica a aceleracao pelo cos e o seno pra encontrar os componentes do vetor de aceleracao
         self.ax = self.cos*self.aceleracao
@@ -103,13 +109,14 @@ class Robo(pygame.sprite.Sprite):
 
 todas_as_sprites = pygame.sprite.Group()
 
-robo = Robo(1, 5)
+robo = Robo(0, 0)
 campo = Campo()
 todas_as_sprites.add(campo)
 todas_as_sprites.add(robo)
 
 posx_robo = []
 posy_robo = []
+angulos_robo = []
 def grafico(x, y, titulo="Gráfico", cor='blue', xlabel="CX", ylabel="CY"):
         plt.show(block=False)
         figure = plt.figure(figsize=(6, 4.5), dpi=100)
@@ -132,7 +139,7 @@ def anim():
     while True:
         if robo.i >= len(posx_robo)-1:
             break
-        relogio.tick(60)
+        relogio.tick(15)
         tela.fill((255,255,255))
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -157,20 +164,20 @@ def grafico1():
 
 
 def grafico2():
-    grafico(tempo, pos_x, "Posição(x) da Bola", 'blue')
+    grafico(tempo, pos_x, "Posição(x) da Bola", 'blue', "t/s", "x")
 
 
 def grafico3():
-    grafico(tempo, pos_y, "Posição(y) da Bola", 'green')
+    grafico(tempo, pos_y, "Posição(y) da Bola", 'green', "t/s", "y")
 
 def grafico4():
-    grafico(posx_robo, posy_robo, "Trajetoria do robo", 'purple')
+    grafico(posx_robo, posy_robo, "Trajetoria do robo", 'purple', "x", "y")
 
 def grafico5():
-    grafico(tempo_robo, posx_robo, "Posição(x) do Robô", 'red')
+    grafico(tempo_robo, posx_robo, "Posição(x) do Robô", 'red', "t/s", "x")
 
 def grafico6():
-    grafico(tempo_robo, posy_robo, "Posição(y) do Robo", 'green')
+    grafico(tempo_robo, posy_robo, "Posição(y) do Robo", 'green', "t/s", "y")
 
 
 # Criação da Janela + Interface #
@@ -184,26 +191,26 @@ janela.geometry("1200x600")
 # campo_pos = scrolledtext.ScrolledText(janela, width=95, height=4)
 # campo_pos.place(relx=0.5, rely=0.93, anchor=CENTER)
 
-botao1 = Button(janela, text="Gráfico da Trajetória", width=14, bg="red", fg='white', command=grafico1)
-botao1.place(anchor=CENTER, relx=0.1, rely=0.05)
+botao1 = Button(janela, text="Trajetória bola", width=10, bg="red", fg='white', command=grafico1)
+botao1.place(anchor=CENTER, relx=0.05, rely=0.05)
 
-botao2 = Button(janela, text="Pos(x) da bola", width=14, bg="blue", fg='white', command=grafico2)
-botao2.place(anchor=CENTER, relx=0.25, rely=0.05)
+botao2 = Button(janela, text="Pos(x) da bola", width=10, bg="blue", fg='white', command=grafico2)
+botao2.place(anchor=CENTER, relx=0.15, rely=0.05)
 
-botao3 = Button(janela, text="Pos(y) da bola", width=14, bg="green", fg='white', command=grafico3)
-botao3.place(anchor=CENTER, relx=0.4, rely=0.05)
+botao3 = Button(janela, text="Pos(y) da bola", width=10, bg="green", fg='white', command=grafico3)
+botao3.place(anchor=CENTER, relx=0.25, rely=0.05)
 
-botao4 = Button(janela, text="Trajetoria robo", width=14, bg="purple", fg="white", command=grafico4)
-botao4.place(anchor=CENTER, relx=0.55, rely=0.05)
+botao4 = Button(janela, text="Trajetoria robo", width=10, bg="purple", fg="white", command=grafico4)
+botao4.place(anchor=CENTER, relx=0.35, rely=0.05)
 
-botao5 = Button(janela, text="Pos(x) do Robo", width=14, bg="purple", fg="white", command=grafico5)
-botao5.place(anchor=CENTER, relx=0.7, rely=0.05)
+botao5 = Button(janela, text="Pos(x) do Robo", width=10, bg="purple", fg="white", command=grafico5)
+botao5.place(anchor=CENTER, relx=0.45, rely=0.05)
 
-botao6 = Button(janela, text="Pos(y) do robo", width=14, bg="purple", fg="white", command=grafico6)
-botao6.place(anchor=CENTER, relx=0.85, rely=0.05)
+botao6 = Button(janela, text="Pos(y) do robo", width=10, bg="purple", fg="white", command=grafico6)
+botao6.place(anchor=CENTER, relx=0.55, rely=0.05)
 
-botao7 = Button(janela, text="Animacao", width=14, bg="purple", fg="white", command=anim)
-botao7.place(anchor=CENTER, relx=0.5, rely= 0.5)
+botao7 = Button(janela, text="Animacao", width=10, bg="purple", fg="white", command=anim)
+botao7.place(anchor=CENTER, relx=0.65, rely= 0.05)
 
 
 # Código (Lógica) responsável pelos dados #
@@ -234,7 +241,7 @@ trajetoria.close()
 
 
 #CRIACAO DO ROBO
-robo = Robo(1, 5)
+robo = Robo(0, 0)
 
 posx_robo = []
 posy_robo = []
@@ -244,6 +251,7 @@ while True:
     posx_robo.append(robo.posx)
     posy_robo.append(robo.posy)
     tempo_robo.append(tempo[robo.i])
+    angulos_robo.append(robo.angulo)
     
     robo.perseguir()
     robo.i+=1
