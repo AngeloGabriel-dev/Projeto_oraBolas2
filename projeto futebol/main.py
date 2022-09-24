@@ -29,7 +29,7 @@ class Robo(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.sprite_robo = []
         self.angulo = 0
-        self.sprite_robo.append(pygame.image.load('robo.png'))
+        self.sprite_robo.append(pygame.image.load('robo1.png'))
         self.image = self.sprite_robo[0]
         
         # self.image = pygame.transform.scale(self.image, (18*10, 18*10))
