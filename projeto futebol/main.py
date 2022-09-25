@@ -2,6 +2,7 @@ from time import sleep
 import tkinter
 from tkinter import CENTER, INSERT, Button, scrolledtext
 
+
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import math
@@ -57,7 +58,7 @@ class Robo(pygame.sprite.Sprite):
     
     def perseguir(self):
         #multiplica a aceleracao por 20 milésimos de segundo pq esse é o tempo de cada posicao da bola
-        self.aceleracao = 2.8*tempo[1]
+        
         #encontra o delta x 
         self.deltax = abs(pos_x[self.i] - self.posx)**2
         
@@ -73,35 +74,38 @@ class Robo(pygame.sprite.Sprite):
         self.cos = (pos_x[self.i] - self.posx)/self.distancia
         self.sen = (pos_y[self.i] - self.posy)/self.distancia
         self.angulo = math.degrees(math.atan(self.sen/self.cos))
+        
+        
+
 
         #multiplica a aceleracao pelo cos e o seno pra encontrar os componentes do vetor de aceleracao
-        self.ax = self.cos*self.aceleracao
-        self.ay = self.sen*self.aceleracao
+        self.velx = self.cos*0.056
+        self.vely = self.sen*0.056
 
         #essas estruturas condicionais servem pra impedir que a velocidade ultrapasse a velocidade final de 2.8m/s
-        if (2.8*tempo[1] >= (self.velx + self.ax)):
-            self.velx = self.ax
+        # if (2.8*tempo[1] >= (self.velx + self.ax)):
+        #     self.velx = self.ax
         
-        elif (-2.8*tempo[1] <= (self.velx + self.ax)):
-            self.velx = self.ax
+        # elif (-2.8*tempo[1] <= (self.velx + self.ax)):
+        #     self.velx = self.ax
         
-        elif (2.8*tempo[1] < (self.velx + self.ax)):
-            self.velx = 2.8*tempo[1]
+        # elif (2.8*tempo[1] < (self.velx + self.ax)):
+        #     self.velx = 2.8*tempo[1]
         
-        elif (-2.8*tempo[1] > (self.velx + self.ax)):
-            self.velx = -1*(2.8*tempo[1])
+        # elif (-2.8*tempo[1] > (self.velx + self.ax)):
+        #     self.velx = -1*(2.8*tempo[1])
         
-        if (2.8*tempo[1] >= (self.vely + self.ay)):
-            self.vely = self.ay
+        # if (2.8*tempo[1] >= (self.vely + self.ay)):
+        #     self.vely = self.ay
         
-        elif (-2.8*tempo[1] <= (self.vely + self.ay)):
-            self.vely = self.ay
+        # elif (-2.8*tempo[1] <= (self.vely + self.ay)):
+        #     self.vely = self.ay
         
-        elif (2.8*tempo[1] < (self.vely + self.ay)):
-            self.vely = 2.8*tempo[1]
+        # elif (2.8*tempo[1] < (self.vely + self.ay)):
+        #     self.vely = 2.8*tempo[1]
         
-        elif (-2.8*tempo[1] > (self.vely + self.ay)):
-            self.vely = -1*(2.8*tempo[1])
+        # elif (-2.8*tempo[1] > (self.vely + self.ay)):
+        #     self.vely = -1*(2.8*tempo[1])
         
         #soma a velocidade nas posicoes
         self.posx += self.velx
@@ -109,7 +113,7 @@ class Robo(pygame.sprite.Sprite):
 
 todas_as_sprites = pygame.sprite.Group()
 
-robo = Robo(0, 0)
+robo = Robo(-2, -2)
 campo = Campo()
 todas_as_sprites.add(campo)
 todas_as_sprites.add(robo)
@@ -117,6 +121,8 @@ todas_as_sprites.add(robo)
 posx_robo = []
 posy_robo = []
 angulos_robo = []
+posx_bola = []
+posy_bola = []
 def grafico(x, y, titulo="Gráfico", cor='blue', xlabel="CX", ylabel="CY"):
         plt.show(block=False)
         figure = plt.figure(figsize=(6, 4.5), dpi=100)
@@ -139,7 +145,7 @@ def anim():
     while True:
         if robo.i >= len(posx_robo)-1:
             break
-        relogio.tick(15)
+        relogio.tick(60)
         tela.fill((255,255,255))
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -150,7 +156,7 @@ def anim():
         todas_as_sprites.update()
 
         # des_robo = pygame.draw.rect(tela, (255,0,0), (100*posx_robo[robo.i], -100*posy_robo[robo.i]+altura, (180/1000)*100, (180/1000)*100))
-        des_bola = pygame.draw.rect(tela, (0,255,0), (100*pos_x[robo.i], -100*pos_y[robo.i]+altura, (21/1000)*500, (21/1000)*500))
+        des_bola = pygame.draw.circle(tela, (255,255,255), (100*pos_x[robo.i], -100*pos_y[robo.i]+altura), 5)
 
         
 
@@ -160,15 +166,15 @@ def anim():
 
 
 def grafico1():
-    grafico(pos_x, pos_y, "Trajetória da Bola", 'red', "Px", "Py")
+    grafico(posx_bola, posy_bola, "Trajetória da Bola", 'red', "Px", "Py")
 
 
 def grafico2():
-    grafico(tempo, pos_x, "Posição(x) da Bola", 'blue', "t/s", "x")
+    grafico(tempo_robo, posx_bola, "Posição(x) da Bola", 'blue', "t/s", "x")
 
 
 def grafico3():
-    grafico(tempo, pos_y, "Posição(y) da Bola", 'green', "t/s", "y")
+    grafico(tempo_robo, posy_bola, "Posição(y) da Bola", 'green', "t/s", "y")
 
 def grafico4():
     grafico(posx_robo, posy_robo, "Trajetoria do robo", 'purple', "x", "y")
@@ -240,23 +246,29 @@ for indice in range(len(pos_x)):
 trajetoria.close()
 
 
-#CRIACAO DO ROBO
-robo = Robo(0, 0)
+
+
 
 posx_robo = []
 posy_robo = []
 
 #essa estrutura de repeticao vai passando as posicoes que o robo toma pra dentro de listas
 while True:
+    posx_bola.append(pos_x[robo.i])
+    posy_bola.append(pos_y[robo.i])
+    
     posx_robo.append(robo.posx)
     posy_robo.append(robo.posy)
+    
     tempo_robo.append(tempo[robo.i])
+    if robo.posx > pos_x[robo.i]:
+        robo.angulo -= 180
     angulos_robo.append(robo.angulo)
     
     robo.perseguir()
     robo.i+=1
     
-    if ((robo.posx + 0.09 >= pos_x[robo.i]-(21/2000) and robo.posx - 0.09 <= pos_x[robo.i]+(21/2000)) and (robo.posy + 0.09 >= pos_y[robo.i]-(21/2000) and robo.posy - 0.09 <= pos_y[robo.i]+(21/2000))):
+    if ((robo.posx + 0.09 >= pos_x[robo.i]-(2.1/200) and robo.posx - 0.09 <= pos_x[robo.i]+(21/2000)) and (robo.posy + 0.09 >= pos_y[robo.i]-(21/2000) and robo.posy - 0.09 <= pos_y[robo.i]+(21/2000))):
         break
 
     if robo.i >= len(pos_x)-1:
