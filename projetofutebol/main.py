@@ -75,10 +75,10 @@ def anim():
         robo.i+=1
         pygame.display.update()
 
-posx_ini = 1
-posy_ini = 1
+posx_ini = 1 #Posição inicial do robô em x
+posy_ini = 1 #Posição inicial do robô em y
 
-def enviadados():
+def enviadados(): #Função que é chamada ao clicar no Botão Enviar
     posx_ini = int(entradax.get())
     posy_ini = int(entraday.get())
     robo = Robo(posx_ini, posy_ini)
