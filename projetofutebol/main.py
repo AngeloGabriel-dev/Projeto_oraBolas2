@@ -1,4 +1,5 @@
 from cgitb import text
+from curses import window
 from time import sleep
 import tkinter
 from tkinter import CENTER, INSERT, Button, Entry, Label, scrolledtext
@@ -13,8 +14,40 @@ import pygame
 from pygame.locals import *
 from sys import exit
 
+var_rec = False
+posx_init_robo = 0
+posy_init_robo = 0
+
+def enviadados(): #Função que é chamada ao clicar no Botão Enviar
+    global var_rec, posx_init_robo, posy_init_robo, window
+    
+    posx_init_robo = int(entradax.get())
+    posy_init_robo = int(entraday.get())
+    
+    var_rec = True
+    window.quit()
+
+
 
 #Funçoes de gráficos#
+
+window = tkinter.Tk()
+window.title("Posições do robô")
+window.config(bg='black')
+window.geometry("800x600")
+
+entradax = Entry(window, width=5)
+entradax.place(anchor=CENTER, relx=0.48, rely= 0.1)
+entradax.insert(0, "X")
+
+entraday = Entry(window, width=5)
+entraday.place(anchor=CENTER, relx=0.52, rely= 0.1)
+entraday.insert(0, "Y")
+
+botaoenvia = Button(window, text="Enviar", width=10, bg="gray", fg="black", command=enviadados)
+botaoenvia.place(anchor=CENTER, relx=0.5, rely=0.15)
+
+window.mainloop()
 
 def grafico(x=0, y=0, titulo="Gráfico", cor='blue', xlabel="CX", ylabel="CY"):
         plt.show(block=False)
@@ -75,23 +108,17 @@ def anim():
         robo.i+=1
         pygame.display.update()
 
-posx_ini = 1 #Posição inicial do robô em x
-posy_ini = 1 #Posição inicial do robô em y
 
-def enviadados(): #Função que é chamada ao clicar no Botão Enviar
-    posx_ini = int(entradax.get())
-    posy_ini = int(entraday.get())
-    robo = Robo(posx_ini, posy_ini)
-    print(posx_ini)
-    print(posy_ini)
+
+
 
 
 # Criação da Janela + Interface #
-
-janela = tkinter.Tk()
-janela.title("Projeto Ora Bolas")
-janela.config(bg='black')
-janela.geometry("1200x600")
+if var_rec == True:
+    janela = tkinter.Tk()
+    janela.title("Projeto Ora Bolas")
+    janela.config(bg='black')
+    janela.geometry("1200x600")
 
 # campo_pos = scrolledtext.ScrolledText(janela, width=95, height=4)
 # campo_pos.place(relx=0.5, rely=0.93, anchor=CENTER)
@@ -117,19 +144,19 @@ botao6.place(anchor=CENTER, relx=0.7, rely=0.05)
 botao7 = Button(janela, text="Animacao", width=10, bg="purple", fg="white", command=anim)
 botao7.place(anchor=CENTER, relx=0.8, rely= 0.05)
 
-texto = Label(janela, text="Coordenadas do robô", bg="white", fg="black", )
-texto.place(anchor=CENTER, relx=0.5, rely= 0.05)
+# texto = Label(janela, text="Coordenadas do robô", bg="white", fg="black", )
+# texto.place(anchor=CENTER, relx=0.5, rely= 0.05)
 
-entradax = Entry(janela, width=5, text="x")
-entradax.place(anchor=CENTER, relx=0.48, rely= 0.1)
-entradax.insert(0, "X")
+# entradax = Entry(window, width=5, text="x")
+# entradax.place(anchor=CENTER, relx=0.48, rely= 0.1)
+# entradax.insert(0, "X")
 
-entraday = Entry(janela, width=5,text="y")
-entraday.place(anchor=CENTER, relx=0.52, rely= 0.1)
-entraday.insert(0, "Y")
+# entraday = Entry(window, width=5,text="y")
+# entraday.place(anchor=CENTER, relx=0.52, rely= 0.1)
+# entraday.insert(0, "Y")
 
-botaoenvia = Button(janela, text="Enviar", width=10, bg="gray", fg="black", command=enviadados)
-botaoenvia.place(anchor=CENTER, relx=0.5, rely=0.15)
+# botaoenvia = Button(window, text="Enviar", width=10, bg="gray", fg="black", command=enviadados)
+# botaoenvia.place(anchor=CENTER, relx=0.5, rely=0.15)
 
 # Criação de classes e funções #
 
@@ -234,7 +261,7 @@ class Robo(pygame.sprite.Sprite):
 todas_as_sprites = pygame.sprite.Group()
 
 
-robo = Robo(posx_ini, posy_ini)
+robo = Robo(posx_init_robo, posy_init_robo)
 campo = Campo()
 todas_as_sprites.add(campo)
 todas_as_sprites.add(robo)
@@ -301,7 +328,7 @@ while True:
 # for line in lista_pos:
 #     campo_pos.insert(INSERT, line)
 
-print(robo.posx, robo.posy, pos_x[robo.i], pos_y[robo.i], tempo[robo.i], robo.velx, robo.vely)
+print(robo.posx, robo.posy, pos_x[robo.i], pos_y[robo.i], tempo[robo.i], robo.velx/0.056, robo.vely/0.056)
 
 robo.i = 0
 
