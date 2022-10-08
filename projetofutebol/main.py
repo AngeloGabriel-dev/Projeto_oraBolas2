@@ -70,13 +70,39 @@ def grafico3():
     grafico(tempo_robo, posy_bola, "Posição(y) da Bola", 'green', "t/s", "y")
 
 def grafico4():
-    grafico(posx_robo, posy_robo, "Trajetoria do robo", 'purple', "x", "y")
+    grafico(tempo_robo, velx_bola, "Velocidade(x) da Bola", 'green', "t/s", "y")
 
 def grafico5():
-    grafico(tempo_robo, posx_robo, "Posição(x) do Robô", 'red', "t/s", "x")
+    grafico(tempo_robo, vely_bola, "Velocidade(y) da Bola", 'green', "t/s", "y")
 
 def grafico6():
+    grafico(tempo_robo, acelx_bola, "Aceleracao(x) da Bola", 'green', "t/s", "y")
+
+def grafico7():
+    grafico(tempo_robo, acely_bola, "Aceleracao(y) da Bola", 'green', "t/s", "y")
+
+def grafico8():
+    grafico(posx_robo, posy_robo, "Trajetoria do robo", 'purple', "x", "y")
+
+def grafico9():
+    grafico(tempo_robo, posx_robo, "Posição(x) do Robô", 'red', "t/s", "x")
+
+def grafico10():
     grafico(tempo_robo, posy_robo, "Posição(y) do Robo", 'green', "t/s", "y")
+
+def grafico11():
+    grafico(tempo_robo, velx_robo, "Velocidade(x) do Robo", 'green', "t/s", "v(x)")
+
+def grafico12():
+    grafico(tempo_robo, vely_robo, "Velocidade(y) do Robo", 'green', "t/s", "v(y)")
+
+def grafico13():
+    grafico(tempo_robo, acelx_robo, "Aceleracao(x) do Robo", 'green', "t/s", "a(x)")
+
+def grafico14():
+    grafico(tempo_robo, acely_robo, "Aceleracao(y) do Robo", 'green', "t/s", "a(y)")
+
+
 
 
 def anim():
@@ -132,17 +158,41 @@ botao2.place(anchor=CENTER, relx=0.2, rely=0.05)
 botao3 = Button(janela, text="Pos(y) da bola", width=10, bg="green", fg='white', command=grafico3)
 botao3.place(anchor=CENTER, relx=0.3, rely=0.05)
 
-botao4 = Button(janela, text="Trajetoria robo", width=10, bg="purple", fg="white", command=grafico4)
+botao4 = Button(janela, text="Velocidade(x) da Bola", width=10, bg="purple", fg="white", command=grafico4)
 botao4.place(anchor=CENTER, relx=0.4, rely=0.05)
 
-botao5 = Button(janela, text="Pos(x) do Robo", width=10, bg="purple", fg="white", command=grafico5)
-botao5.place(anchor=CENTER, relx=0.6, rely=0.05)
+botao5 = Button(janela, text="Velocidade(y) da Bola", width=10, bg="purple", fg="white", command=grafico5)
+botao5.place(anchor=CENTER, relx=0.5, rely=0.05)
 
-botao6 = Button(janela, text="Pos(y) do robo", width=10, bg="purple", fg="white", command=grafico6)
-botao6.place(anchor=CENTER, relx=0.7, rely=0.05)
+botao6 = Button(janela, text="Aceleracao(x) da Bola", width=10, bg="purple", fg="white", command=grafico6)
+botao6.place(anchor=CENTER, relx=0.6, rely=0.05)
 
-botao7 = Button(janela, text="Animacao", width=10, bg="purple", fg="white", command=anim)
-botao7.place(anchor=CENTER, relx=0.8, rely= 0.05)
+botao7 = Button(janela, text="Aceleracao(y) da Bola", width=10, bg="purple", fg="white", command=grafico7)
+botao7.place(anchor=CENTER, relx=0.7, rely=0.05)
+
+botao8 = Button(janela, text="Trajetoria robo", width=10, bg="purple", fg="white", command=grafico8)
+botao8.place(anchor=CENTER, relx=0.8, rely=0.05)
+
+botao9 = Button(janela, text="Pos(x) do Robo", width=10, bg="purple", fg="white", command=grafico9)
+botao9.place(anchor=CENTER, relx=0.9, rely=0.05)
+
+botao10 = Button(janela, text="Pos(y) do robo", width=10, bg="purple", fg="white", command=grafico10)
+botao10.place(anchor=CENTER, relx=0.1, rely=0.09)
+
+botao11 = Button(janela, text="Velocidade (x) do robo", width=10, bg="red", fg='white', command=grafico11)
+botao11.place(anchor=CENTER, relx=0.2, rely=0.09)
+
+botao12 = Button(janela, text="Velocidade (y) do robo", width=10, bg="blue", fg='white', command=grafico12)
+botao12.place(anchor=CENTER, relx=0.3, rely=0.09)
+
+botao13 = Button(janela, text="Aceleracao (x) do robo", width=10, bg="green", fg='white', command=grafico13)
+botao13.place(anchor=CENTER, relx=0.4, rely=0.09)
+
+botao14 = Button(janela, text="Aceleracao (y) do robo", width=10, bg="purple", fg="white", command=grafico14)
+botao14.place(anchor=CENTER, relx=0.5, rely=0.09)
+
+botao15 = Button(janela, text="Animacao", width=10, bg="purple", fg="white", command=anim)
+botao15.place(anchor=CENTER, relx=0.6, rely= 0.09)
 
 # texto = Label(janela, text="Coordenadas do robô", bg="white", fg="black", )
 # texto.place(anchor=CENTER, relx=0.5, rely= 0.05)
@@ -268,9 +318,17 @@ todas_as_sprites.add(robo)
 
 posx_robo = []
 posy_robo = []
+velx_robo = []
+vely_robo = []
+acelx_robo = []
+acely_robo = []
 angulos_robo = []
 posx_bola = []
 posy_bola = []
+velx_bola = []
+vely_bola = []
+acelx_bola = []
+acely_bola = []
 
 
 # Código (Lógica) responsável pelos dados #
@@ -307,9 +365,17 @@ posy_robo = []
 while True:
     posx_bola.append(pos_x[robo.i])
     posy_bola.append(pos_y[robo.i])
-    
+    velx_bola.append(pos_x[robo.i]/(tempo[robo.i]*50))
+    vely_bola.append(pos_y[robo.i]/(tempo[robo.i]*50))
+    acelx_bola.append(velx_bola[robo.i]/(tempo[robo.i]*50))
+    acely_bola.append(vely_bola[robo.i]/(tempo[robo.i]*50))
+
     posx_robo.append(robo.posx)
     posy_robo.append(robo.posy)
+    velx_robo.append(robo.velx/0.056)
+    vely_robo.append(robo.vely/0.056)
+    acelx_robo.append(velx_robo[robo.i]/(tempo[robo.i]*50))
+    acely_robo.append(vely_robo[robo.i]/(tempo[robo.i]*50))
     
     tempo_robo.append(tempo[robo.i])
     if robo.posx > pos_x[robo.i]:
@@ -320,6 +386,7 @@ while True:
     robo.i+=1
     
     if ((robo.posx + 0.09 >= pos_x[robo.i]-(2.1/200) and robo.posx - 0.09 <= pos_x[robo.i]+(21/2000)) and (robo.posy + 0.09 >= pos_y[robo.i]-(21/2000) and robo.posy - 0.09 <= pos_y[robo.i]+(21/2000))):
+        
         break
 
     if robo.i >= len(pos_x)-1:
