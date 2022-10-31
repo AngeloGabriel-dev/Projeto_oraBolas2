@@ -21,8 +21,8 @@ posy_init_robo = 0
 def enviadados(): #Função que é chamada ao clicar no Botão Enviar
     global var_rec, posx_init_robo, posy_init_robo, window
     
-    posx_init_robo = int(entradax.get())
-    posy_init_robo = int(entraday.get())
+    posx_init_robo = float(entradax.get())
+    posy_init_robo = float(entraday.get())
     
     var_rec = True
     window.quit()
@@ -101,6 +101,9 @@ def grafico13():
 
 def grafico14():
     grafico(tempo_robo, acely_robo, "Aceleracao(y) do Robo", 'green', "t/s", "a(y)")
+
+def grafico15():
+    grafico(tempo_robo, distancias, "Distancia entre o robo e a bola", 'red', "t/s", "m")
 
 
 
@@ -194,6 +197,9 @@ botao14.place(anchor=CENTER, relx=0.5, rely=0.09)
 botao15 = Button(janela, text="Animacao", width=10, bg="purple", fg="white", command=anim)
 botao15.place(anchor=CENTER, relx=0.6, rely= 0.09)
 
+botao16 = Button(janela, text="Distancia", width=10, bg="red", fg="blue", command=grafico15)
+botao16.place(anchor=CENTER, relx=0.7, rely=0.09)
+
 # texto = Label(janela, text="Coordenadas do robô", bg="white", fg="black", )
 # texto.place(anchor=CENTER, relx=0.5, rely= 0.05)
 
@@ -225,6 +231,7 @@ class Campo(pygame.sprite.Sprite):
 class Robo(pygame.sprite.Sprite):
     def __init__(self, posx_init, posy_init):
         pygame.sprite.Sprite.__init__(self)
+        self.distancia = 0
         self.sprite_robo = []
         self.angulo = 0
         self.sprite_robo.append(pygame.image.load('robo1.png'))
@@ -279,6 +286,11 @@ class Robo(pygame.sprite.Sprite):
         self.velx = self.cos*0.056
         self.vely = self.sen*0.056
 
+        if self.distancia < 1:
+            
+            self.velx -= 0.005*(1/self.distancia)
+            self.vely -= 0.005*(1/self.distancia)
+            
         #essas estruturas condicionais servem pra impedir que a velocidade ultrapasse a velocidade final de 2.8m/s
         # if (2.8*tempo[1] >= (self.velx + self.ax)):
         #     self.velx = self.ax
@@ -329,6 +341,7 @@ velx_bola = []
 vely_bola = []
 acelx_bola = []
 acely_bola = []
+distancias = []
 
 
 # Código (Lógica) responsável pelos dados #
@@ -365,17 +378,19 @@ posy_robo = []
 while True:
     posx_bola.append(pos_x[robo.i])
     posy_bola.append(pos_y[robo.i])
-    velx_bola.append(pos_x[robo.i]/(tempo[robo.i]*50))
-    vely_bola.append(pos_y[robo.i]/(tempo[robo.i]*50))
-    acelx_bola.append(velx_bola[robo.i]/(tempo[robo.i]*50))
-    acely_bola.append(vely_bola[robo.i]/(tempo[robo.i]*50))
+    velx_bola.append((pos_x[robo.i]-pos_x[robo.i-1])/((tempo[robo.i])-(tempo[robo.i-1])))
+    vely_bola.append((pos_y[robo.i]-pos_y[robo.i-1])/((tempo[robo.i])-(tempo[robo.i-1])))
+    acelx_bola.append((velx_bola[robo.i]-velx_bola[robo.i-1])/(tempo[robo.i]-tempo[robo.i-1]))
+    acely_bola.append((vely_bola[robo.i]-vely_bola[robo.i-1])/(tempo[robo.i]-tempo[robo.i-1]))
 
     posx_robo.append(robo.posx)
     posy_robo.append(robo.posy)
-    velx_robo.append(robo.velx/0.056)
-    vely_robo.append(robo.vely/0.056)
-    acelx_robo.append(velx_robo[robo.i]/(tempo[robo.i]*50))
-    acely_robo.append(vely_robo[robo.i]/(tempo[robo.i]*50))
+    velx_robo.append((posx_robo[robo.i]-posx_robo[robo.i-1])/((tempo[robo.i])-(tempo[robo.i-1])))
+    vely_robo.append((posy_robo[robo.i]-posy_robo[robo.i-1])/((tempo[robo.i])-(tempo[robo.i-1])))
+    acelx_robo.append(velx_robo[robo.i]/(tempo[robo.i]))
+    acely_robo.append(vely_robo[robo.i]/(tempo[robo.i]))
+
+    distancias.append(robo.distancia)
     
     tempo_robo.append(tempo[robo.i])
     if robo.posx > pos_x[robo.i]:
