@@ -1,5 +1,5 @@
 # Projeto Ora Bolas 2
-
+[|||||||-] 85% do projeto
 ### Tecnologias Usadas: Python, Tkinter, Pygame e Matplotlib
 
 > Previsão de Entrega Final: 17/11/2022
@@ -45,7 +45,7 @@ do tempo 𝑡 até o instante de interceptação;
 #### Incorporar a condição que a velocidade relativa entre a bola e o robô seja
 pequena no ponto de interceptação para que seja possível dominar a bola;
 
-### 06: Game Engine (80%)
+### 06: Game Engine (90%)
 #### Incrementar a saída do programa usando um game engine para uma
 simulação mais atrativa do ponto de vista visual e, eventualmente, mais
 realista do ponto de vista físico. 
