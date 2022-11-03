@@ -146,7 +146,6 @@ def anim():
 
         robo.i+=1
         pygame.display.update()
-        
     #A janela fecha depois de 3 segundos e não conseguimos rerodar a animação, foi o máximo que consegui até agora com o pygame...
     pygame.time.wait(3000) 
     pygame.display.quit()
@@ -160,9 +159,6 @@ if var_rec == True:
     janela.title("Projeto Ora Bolas")
     janela.config(bg='black')
     janela.geometry("1200x600")
-
-# campo_pos = scrolledtext.ScrolledText(janela, width=95, height=4)
-# campo_pos.place(relx=0.5, rely=0.93, anchor=CENTER)
 
 botao1 = Button(janela, text="Trajetória da Bola", width=16, bg="aquamarine", fg='black', command=grafico1)
 botao1.place(anchor=CENTER, relx=0.07, rely=0.25)
@@ -412,12 +408,8 @@ while True:
     if robo.i >= len(pos_x)-1:
         break
 
-# for line in lista_pos:
-#     campo_pos.insert(INSERT, line)
-
 print(robo.posx, robo.posy, pos_x[robo.i], pos_y[robo.i], tempo[robo.i], robo.velx/0.056, robo.vely/0.056)
 
 robo.i = 0
-
 
 janela.mainloop()

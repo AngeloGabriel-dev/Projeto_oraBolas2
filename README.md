@@ -29,13 +29,13 @@ tempo 𝑡 até o instante de interceptação;
 ![image](https://user-images.githubusercontent.com/105310866/192118200-46982472-2058-4cd5-b570-416da4ef898f.png)
 
 
-- [ ] Gráfico dos componentes 𝑣𝑥 e 𝑣𝑦 da velocidade da bola e do robô em função
+- [x] Gráfico dos componentes 𝑣𝑥 e 𝑣𝑦 da velocidade da bola e do robô em função
 do tempo 𝑡 até o instante de interceptação;
 
-- [ ] Gráfico dos componentes 𝑎𝑥 e 𝑎𝑦 da aceleração da bola e do robô em função
+- [x] Gráfico dos componentes 𝑎𝑥 e 𝑎𝑦 da aceleração da bola e do robô em função
 do tempo 𝑡 até o instante de interceptação;
 
-- [ ] Gráfico da distância relativa 𝑑 entre o robô e a bola como função do tempo
+- [x] Gráfico da distância relativa 𝑑 entre o robô e a bola como função do tempo
 𝑡 até o instante de interceptação;
 
 
@@ -45,7 +45,7 @@ do tempo 𝑡 até o instante de interceptação;
 #### Incorporar a condição que a velocidade relativa entre a bola e o robô seja
 pequena no ponto de interceptação para que seja possível dominar a bola;
 
-### 06: Game Engine (60/70%)
+### 06: Game Engine (80%)
 #### Incrementar a saída do programa usando um game engine para uma
 simulação mais atrativa do ponto de vista visual e, eventualmente, mais
 realista do ponto de vista físico. 
