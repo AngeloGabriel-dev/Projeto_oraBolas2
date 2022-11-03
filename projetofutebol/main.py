@@ -38,11 +38,11 @@ window.geometry("800x600")
 
 entradax = Entry(window, width=5)
 entradax.place(anchor=CENTER, relx=0.48, rely= 0.1)
-entradax.insert(0, "X")
+entradax.insert(0, "1")
 
 entraday = Entry(window, width=5)
 entraday.place(anchor=CENTER, relx=0.52, rely= 0.1)
-entraday.insert(0, "Y")
+entraday.insert(0, "1")
 
 botaoenvia = Button(window, text="Enviar", width=10, bg="gray", fg="black", command=enviadados)
 botaoenvia.place(anchor=CENTER, relx=0.5, rely=0.15)
@@ -61,49 +61,49 @@ def grafico(x=0, y=0, titulo="Gráfico", cor='blue', xlabel="CX", ylabel="CY"):
         plt.close("all")
 
 def grafico1():
-    grafico(posx_bola, posy_bola, "Trajetória da Bola", 'red', "Px", "Py")
+    grafico(posx_bola, posy_bola, "Trajetória da Bola", 'blue', "x", "y")
 
 def grafico2():
     grafico(tempo_robo, posx_bola, "Posição(x) da Bola", 'blue', "t/s", "x")
 
 def grafico3():
-    grafico(tempo_robo, posy_bola, "Posição(y) da Bola", 'green', "t/s", "y")
+    grafico(tempo_robo, posy_bola, "Posição(y) da Bola", 'blue', "t/s", "y")
 
 def grafico4():
-    grafico(tempo_robo, velx_bola, "Velocidade(x) da Bola", 'green', "t/s", "y")
+    grafico(tempo_robo, velx_bola, "Velocidade(x) da Bola", 'blue', "t/s", "v(x)")
 
 def grafico5():
-    grafico(tempo_robo, vely_bola, "Velocidade(y) da Bola", 'green', "t/s", "y")
+    grafico(tempo_robo, vely_bola, "Velocidade(y) da Bola", 'blue', "t/s", "v(y)")
 
 def grafico6():
-    grafico(tempo_robo, acelx_bola, "Aceleracao(x) da Bola", 'green', "t/s", "y")
+    grafico(tempo_robo, acelx_bola, "Aceleração(x) da Bola", 'blue', "t/s", "a(x)")
 
 def grafico7():
-    grafico(tempo_robo, acely_bola, "Aceleracao(y) da Bola", 'green', "t/s", "y")
+    grafico(tempo_robo, acely_bola, "Aceleração(y) da Bola", 'blue', "t/s", "a(y)")
 
 def grafico8():
-    grafico(posx_robo, posy_robo, "Trajetoria do robo", 'purple', "x", "y")
+    grafico(posx_robo, posy_robo, "Trajetória do Robô", 'purple', "x", "y")
 
 def grafico9():
-    grafico(tempo_robo, posx_robo, "Posição(x) do Robô", 'red', "t/s", "x")
+    grafico(tempo_robo, posx_robo, "Posição(x) do Robô", 'purple', "t/s", "x")
 
 def grafico10():
-    grafico(tempo_robo, posy_robo, "Posição(y) do Robo", 'green', "t/s", "y")
+    grafico(tempo_robo, posy_robo, "Posição(y) do Robô", 'purple', "t/s", "y")
 
 def grafico11():
-    grafico(tempo_robo, velx_robo, "Velocidade(x) do Robo", 'green', "t/s", "v(x)")
+    grafico(tempo_robo, velx_robo, "Velocidade(x) do Robô", 'purple', "t/s", "v(x)")
 
 def grafico12():
-    grafico(tempo_robo, vely_robo, "Velocidade(y) do Robo", 'green', "t/s", "v(y)")
+    grafico(tempo_robo, vely_robo, "Velocidade(y) do Robô", 'purple', "t/s", "v(y)")
 
 def grafico13():
-    grafico(tempo_robo, acelx_robo, "Aceleracao(x) do Robo", 'green', "t/s", "a(x)")
+    grafico(tempo_robo, acelx_robo, "Aceleração(x) do Robô", 'purple', "t/s", "a(x)")
 
 def grafico14():
-    grafico(tempo_robo, acely_robo, "Aceleracao(y) do Robo", 'green', "t/s", "a(y)")
+    grafico(tempo_robo, acely_robo, "Aceleração(y) do Robô", 'purple', "t/s", "a(y)")
 
 def grafico15():
-    grafico(tempo_robo, distancias, "Distancia entre o robo e a bola", 'red', "t/s", "m")
+    grafico(tempo_robo, distancias, "Distancia entre o robô e a bola", 'red', "t/s", "m")
 
 
 
@@ -152,53 +152,53 @@ if var_rec == True:
 # campo_pos = scrolledtext.ScrolledText(janela, width=95, height=4)
 # campo_pos.place(relx=0.5, rely=0.93, anchor=CENTER)
 
-botao1 = Button(janela, text="Trajetória bola", width=10, bg="red", fg='white', command=grafico1)
-botao1.place(anchor=CENTER, relx=0.1, rely=0.05)
+botao1 = Button(janela, text="Trajetória da Bola", width=16, bg="aquamarine", fg='black', command=grafico1)
+botao1.place(anchor=CENTER, relx=0.07, rely=0.25)
 
-botao2 = Button(janela, text="Pos(x) da bola", width=10, bg="blue", fg='white', command=grafico2)
-botao2.place(anchor=CENTER, relx=0.2, rely=0.05)
+botao2 = Button(janela, text="Posição(x) da Bola", width=16, bg="aquamarine", fg='black', command=grafico2)
+botao2.place(anchor=CENTER, relx=0.07, rely=0.4)
 
-botao3 = Button(janela, text="Pos(y) da bola", width=10, bg="green", fg='white', command=grafico3)
-botao3.place(anchor=CENTER, relx=0.3, rely=0.05)
+botao3 = Button(janela, text="Posição(y) da Bola", width=16, bg="aquamarine", fg='black', command=grafico3)
+botao3.place(anchor=CENTER, relx=0.07, rely=0.45)
 
-botao4 = Button(janela, text="Velocidade(x) da Bola", width=10, bg="purple", fg="white", command=grafico4)
-botao4.place(anchor=CENTER, relx=0.4, rely=0.05)
+botao4 = Button(janela, text="Velocidade(x) da Bola", width=16, bg="aquamarine2", fg="black", command=grafico4)
+botao4.place(anchor=CENTER, relx=0.07, rely=0.6)
 
-botao5 = Button(janela, text="Velocidade(y) da Bola", width=10, bg="purple", fg="white", command=grafico5)
-botao5.place(anchor=CENTER, relx=0.5, rely=0.05)
+botao5 = Button(janela, text="Velocidade(y) da Bola", width=16, bg="aquamarine2", fg="black", command=grafico5)
+botao5.place(anchor=CENTER, relx=0.07, rely=0.65)
 
-botao6 = Button(janela, text="Aceleracao(x) da Bola", width=10, bg="purple", fg="white", command=grafico6)
-botao6.place(anchor=CENTER, relx=0.6, rely=0.05)
+botao6 = Button(janela, text="Aceleração(x) da Bola", width=16, bg="aquamarine3", fg="black", command=grafico6)
+botao6.place(anchor=CENTER, relx=0.07, rely=0.8)
 
-botao7 = Button(janela, text="Aceleracao(y) da Bola", width=10, bg="purple", fg="white", command=grafico7)
-botao7.place(anchor=CENTER, relx=0.7, rely=0.05)
+botao7 = Button(janela, text="Aceleração(y) da Bola", width=16, bg="aquamarine3", fg="black", command=grafico7)
+botao7.place(anchor=CENTER, relx=0.07, rely=0.85)
 
-botao8 = Button(janela, text="Trajetoria robo", width=10, bg="purple", fg="white", command=grafico8)
-botao8.place(anchor=CENTER, relx=0.8, rely=0.05)
+botao8 = Button(janela, text="Trajetória do Robô", width=16, bg="mediumpurple", fg="white", command=grafico8)
+botao8.place(anchor=CENTER, relx=0.18, rely=0.25)
 
-botao9 = Button(janela, text="Pos(x) do Robo", width=10, bg="purple", fg="white", command=grafico9)
-botao9.place(anchor=CENTER, relx=0.9, rely=0.05)
+botao9 = Button(janela, text="Posição(x) do Robô", width=16, bg="mediumpurple", fg="white", command=grafico9)
+botao9.place(anchor=CENTER, relx=0.18, rely=0.4)
 
-botao10 = Button(janela, text="Pos(y) do robo", width=10, bg="purple", fg="white", command=grafico10)
-botao10.place(anchor=CENTER, relx=0.1, rely=0.09)
+botao10 = Button(janela, text="Posição(y) do Robô", width=16, bg="mediumpurple", fg="white", command=grafico10)
+botao10.place(anchor=CENTER, relx=0.18, rely=0.45)
 
-botao11 = Button(janela, text="Velocidade (x) do robo", width=10, bg="red", fg='white', command=grafico11)
-botao11.place(anchor=CENTER, relx=0.2, rely=0.09)
+botao11 = Button(janela, text="Velocidade(x) do Robô", width=16, bg="mediumpurple", fg='white', command=grafico11)
+botao11.place(anchor=CENTER, relx=0.18, rely=0.6)
 
-botao12 = Button(janela, text="Velocidade (y) do robo", width=10, bg="blue", fg='white', command=grafico12)
-botao12.place(anchor=CENTER, relx=0.3, rely=0.09)
+botao12 = Button(janela, text="Velocidade(y) do Robô", width=16, bg="mediumpurple", fg='white', command=grafico12)
+botao12.place(anchor=CENTER, relx=0.18, rely=0.65)
 
-botao13 = Button(janela, text="Aceleracao (x) do robo", width=10, bg="green", fg='white', command=grafico13)
-botao13.place(anchor=CENTER, relx=0.4, rely=0.09)
+botao13 = Button(janela, text="Aceleração(x) do Robô", width=16, bg="mediumpurple", fg='white', command=grafico13)
+botao13.place(anchor=CENTER, relx=0.18, rely=0.8)
 
-botao14 = Button(janela, text="Aceleracao (y) do robo", width=10, bg="purple", fg="white", command=grafico14)
-botao14.place(anchor=CENTER, relx=0.5, rely=0.09)
+botao14 = Button(janela, text="Aceleração(y) do Robô", width=16, bg="mediumpurple", fg="white", command=grafico14)
+botao14.place(anchor=CENTER, relx=0.18, rely=0.85)
 
-botao15 = Button(janela, text="Animacao", width=10, bg="purple", fg="white", command=anim)
-botao15.place(anchor=CENTER, relx=0.6, rely= 0.09)
+botao15 = Button(janela, text="Animação do movimento", width=22, bg="red", fg="white", command=anim)
+botao15.place(anchor=CENTER, relx=0.12, rely= 0.1)
 
-botao16 = Button(janela, text="Distancia", width=10, bg="red", fg="blue", command=grafico15)
-botao16.place(anchor=CENTER, relx=0.7, rely=0.09)
+botao16 = Button(janela, text="Distância entre o robô e a bola", width=22, bg="blue", fg="white", command=grafico15)
+botao16.place(anchor=CENTER, relx=0.12, rely=0.15)
 
 # texto = Label(janela, text="Coordenadas do robô", bg="white", fg="black", )
 # texto.place(anchor=CENTER, relx=0.5, rely= 0.05)
