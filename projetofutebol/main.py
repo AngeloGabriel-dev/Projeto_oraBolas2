@@ -2,17 +2,21 @@ from cgitb import text
 from curses import window
 from time import sleep
 import tkinter
-from tkinter import CENTER, INSERT, Button, Entry, Label, scrolledtext
+from tkinter import CENTER, INSERT, Button, Entry, Label, scrolledtext, font
 from tkinter import ttk
-from ttkthemes import ThemedTk
-
-
+from tkinter import font
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import math
 import pygame
 from pygame.locals import *
-from sys import exit
+import sys
+
+#antes de rodar, baixar os seguintes pacotes:
+#pip install windows-curses
+#pip install tkinter
+#pip install pygame
+#pip install matplotlib
 
 var_rec = False
 posx_init_robo = 0
@@ -26,35 +30,44 @@ def enviadados(): #Função que é chamada ao clicar no Botão Enviar
     
     var_rec = True
     window.quit()
+    window.geometry("0x0")
 
 
-
-#Funçoes de gráficos#
+##############################################################
+               # Criação da Janela(Tkinter) #
+##############################################################
 
 window = tkinter.Tk()
 window.title("Posições do robô")
 window.config(bg='black')
-window.geometry("800x600")
+window.geometry("400x200")
+
+textox = Label(window, text="Digite a coordenada inicial X: ", font=("Arial Bold", 12), fg="white", bg="black")
+textox.place(anchor=CENTER, relx=0.4, rely=0.1)
+
+textoy = Label(window, text="Digite a coordenada inicial Y: ", font=("Arial Bold", 12), fg="white", bg="black")
+textoy.place(anchor=CENTER, relx=0.4, rely=0.3)
 
 entradax = Entry(window, width=5)
-entradax.place(anchor=CENTER, relx=0.48, rely= 0.1)
-entradax.insert(0, "1")
+entradax.place(anchor=CENTER, relx=0.8, rely= 0.1)
 
 entraday = Entry(window, width=5)
-entraday.place(anchor=CENTER, relx=0.52, rely= 0.1)
-entraday.insert(0, "1")
+entraday.place(anchor=CENTER, relx=0.8, rely= 0.3)
 
-botaoenvia = Button(window, text="Enviar", width=10, bg="gray", fg="black", command=enviadados)
-botaoenvia.place(anchor=CENTER, relx=0.5, rely=0.15)
+botaoenvia = Button(window, text="Enviar dados", width=25, bg="green", fg="white", font=("Arial Bold", 12), command=enviadados)
+botaoenvia.place(anchor=CENTER, relx=0.5, rely=0.6)
 
 window.mainloop()
 
+##############################################################
+                    # Funções Gráficas #
+##############################################################
 def grafico(x=0, y=0, titulo="Gráfico", cor='blue', xlabel="CX", ylabel="CY"):
         plt.show(block=False)
-        figure = plt.figure(figsize=(6, 4.5), dpi=100)
+        figure = plt.figure(figsize=(8, 4.5), dpi=100)
         figure.add_subplot(111).plot(x, y, color=cor)
         chart = FigureCanvasTkAgg(figure, janela)
-        chart.get_tk_widget().place(anchor=CENTER, relx=0.5, rely=0.55)
+        chart.get_tk_widget().place(anchor=CENTER, relx=0.6, rely=0.55)
         plt.title(titulo)
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
@@ -106,10 +119,13 @@ def grafico15():
     grafico(tempo_robo, distancias, "Distancia entre o robô e a bola", 'red', "t/s", "m")
 
 
-
+##############################################################
+                # Funções Animação(Pygame) #
+##############################################################
 
 def anim():
     pygame.init()
+    pygame.display.init()
     largura = 900
     altura = 600
 
@@ -121,10 +137,6 @@ def anim():
             break
         relogio.tick(60)
         tela.fill((255,255,255))
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                exit()
         
         todas_as_sprites.draw(tela)
         todas_as_sprites.update()
@@ -132,17 +144,17 @@ def anim():
         # des_robo = pygame.draw.rect(tela, (255,0,0), (100*posx_robo[robo.i], -100*posy_robo[robo.i]+altura, (180/1000)*100, (180/1000)*100))
         des_bola = pygame.draw.circle(tela, (255,255,255), (100*pos_x[robo.i], -100*pos_y[robo.i]+altura), 5)
 
-        
-
         robo.i+=1
         pygame.display.update()
+        
+    #A janela fecha depois de 3 segundos e não conseguimos rerodar a animação, foi o máximo que consegui até agora com o pygame...
+    pygame.time.wait(3000) 
+    pygame.display.quit()
 
+##############################################################
+                # Criação da Interface #
+##############################################################
 
-
-
-
-
-# Criação da Janela + Interface #
 if var_rec == True:
     janela = tkinter.Tk()
     janela.title("Projeto Ora Bolas")
@@ -200,21 +212,10 @@ botao15.place(anchor=CENTER, relx=0.12, rely= 0.1)
 botao16 = Button(janela, text="Distância entre o robô e a bola", width=22, bg="blue", fg="white", command=grafico15)
 botao16.place(anchor=CENTER, relx=0.12, rely=0.15)
 
-# texto = Label(janela, text="Coordenadas do robô", bg="white", fg="black", )
-# texto.place(anchor=CENTER, relx=0.5, rely= 0.05)
 
-# entradax = Entry(window, width=5, text="x")
-# entradax.place(anchor=CENTER, relx=0.48, rely= 0.1)
-# entradax.insert(0, "X")
-
-# entraday = Entry(window, width=5,text="y")
-# entraday.place(anchor=CENTER, relx=0.52, rely= 0.1)
-# entraday.insert(0, "Y")
-
-# botaoenvia = Button(window, text="Enviar", width=10, bg="gray", fg="black", command=enviadados)
-# botaoenvia.place(anchor=CENTER, relx=0.5, rely=0.15)
-
-# Criação de classes e funções #
+##############################################################
+            # Criação de classes e funções #
+##############################################################
 
 class Campo(pygame.sprite.Sprite):
     def __init__(self):
@@ -259,7 +260,11 @@ class Robo(pygame.sprite.Sprite):
         
         self.image = pygame.transform.rotate(self.image, angulos_robo[robo.i])
         # self.image = pygame.transform.scale(self.image, (18*10, 18*10))
-    
+
+    ##############################################################
+                    # Lógica do Movimento #
+    ##############################################################
+
     def perseguir(self):
         #multiplica a aceleracao por 20 milésimos de segundo pq esse é o tempo de cada posicao da bola
         
@@ -322,7 +327,6 @@ class Robo(pygame.sprite.Sprite):
 
 todas_as_sprites = pygame.sprite.Group()
 
-
 robo = Robo(posx_init_robo, posy_init_robo)
 campo = Campo()
 todas_as_sprites.add(campo)
@@ -343,8 +347,9 @@ acelx_bola = []
 acely_bola = []
 distancias = []
 
-
-# Código (Lógica) responsável pelos dados #
+##############################################################
+        # Código (Lógica) responsável pelos dados #
+##############################################################
 
 trajetoria = open('trajetoriaMeio.txt', 'r')
 lista_pos = []
