@@ -2,7 +2,7 @@ from cgitb import text
 from curses import window
 from time import sleep
 import tkinter
-from tkinter import CENTER, INSERT, Button, Entry, Label, scrolledtext, font
+from tkinter import CENTER, INSERT, Button, Entry, Label, scrolledtext, font, Canvas
 from tkinter import ttk
 from tkinter import font
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -19,6 +19,7 @@ import sys
 #pip install matplotlib
 
 var_rec = False
+var_rec2 = False
 posx_init_robo = 0
 posy_init_robo = 0
 
@@ -29,6 +30,13 @@ def enviadados(): #Função que é chamada ao clicar no Botão Enviar
     posy_init_robo = float(entraday.get())
     
     var_rec = True
+    window.quit()
+    window.geometry("0x0")
+
+def enviadados2(): #Função que é chamada ao clicar no Botão "Todos os gráficos"
+    global var_rec2, window
+    
+    var_rec2 = True
     window.quit()
     window.geometry("0x0")
 
@@ -62,7 +70,9 @@ window.mainloop()
 ##############################################################
                     # Funções Gráficas #
 ##############################################################
+
 def grafico(x=0, y=0, titulo="Gráfico", cor='blue', xlabel="CX", ylabel="CY"):
+        #apaga()
         plt.show(block=False)
         figure = plt.figure(figsize=(8, 4.5), dpi=100)
         figure.add_subplot(111).plot(x, y, color=cor)
@@ -116,8 +126,38 @@ def grafico14():
     grafico(tempo_robo, acely_robo, "Aceleração(y) do Robô", 'purple', "t/s", "a(y)")
 
 def grafico15():
-    grafico(tempo_robo, distancias, "Distancia entre o robô e a bola", 'red', "t/s", "m")
+    grafico(tempo_robo, distancias, "Distância entre o robô e a bola", 'red', "t/s", "m")
 
+def graficofinal(x=0, y=0, titulo="Gráfico", cor='blue', xlabel="CX", ylabel="CY", rx=0.6, ry=0.55):
+        plt.show(block=False)
+        figure = plt.figure(figsize=(5, 4), dpi=52)
+        figure.add_subplot(111).plot(x, y, color=cor)
+        chart = FigureCanvasTkAgg(figure, janela2)
+        chart.get_tk_widget().place(anchor=CENTER, relx=rx, rely=ry)
+        plt.title(titulo, fontsize=12)
+        plt.xlabel(xlabel, fontsize=12)
+        plt.ylabel(ylabel, fontsize=12)
+        plt.close('all')
+
+def grafico16():
+    graficofinal(posx_bola, posy_bola, "Trajetória da Bola", 'blue', "x", "y", 0.13, 0.13)
+    graficofinal(tempo_robo, posx_bola, "Posição(x) da Bola", 'blue', "t/s", "x", 0.38, 0.13)
+    graficofinal(tempo_robo, posy_bola, "Posição(y) da Bola", 'blue', "t/s", "y", 0.63, 0.13)
+    graficofinal(tempo_robo, velx_bola, "Velocidade(x) da Bola", 'blue', "t/s", "v(x)", 0.875, 0.13)
+    
+    graficofinal(tempo_robo, vely_bola, "Velocidade(y) da Bola", 'blue', "t/s", "v(y)", 0.13, 0.365)
+    graficofinal(tempo_robo, acelx_bola, "Aceleração(x) da Bola", 'blue', "t/s", "a(x)", 0.38, 0.365)
+    graficofinal(tempo_robo, acely_bola, "Aceleração(y) da Bola", 'blue', "t/s", "a(y)", 0.63, 0.365)
+    graficofinal(posx_robo, posy_robo, "Trajetória do Robô", 'purple', "x", "y", 0.875, 0.36)
+
+    graficofinal(tempo_robo, posx_robo, "Posição(x) do Robô", 'purple', "t/s", "x", 0.13, 0.61)
+    graficofinal(tempo_robo, posy_robo, "Posição(y) do Robô", 'purple', "t/s", "y", 0.38, 0.61)
+    graficofinal(tempo_robo, velx_robo, "Velocidade(x) do Robô", 'purple', "t/s", "v(x)", 0.63, 0.61)
+    graficofinal(tempo_robo, vely_robo, "Velocidade(y) do Robô", 'purple', "t/s", "v(y)", 0.875, 0.61)
+
+    graficofinal(tempo_robo, acelx_robo, "Aceleração(x) do Robô", 'purple', "t/s", "a(x)", 0.13, 0.85)
+    graficofinal(tempo_robo, acely_robo, "Aceleração(y) do Robô", 'purple', "t/s", "a(y)", 0.38, 0.85)
+    graficofinal(tempo_robo, distancias, "Distância entre o robô e a bola", 'red', "t/s", "m", 0.63, 0.85)
 
 ##############################################################
                 # Funções Animação(Pygame) #
@@ -142,7 +182,7 @@ def anim():
         todas_as_sprites.update()
 
         # des_robo = pygame.draw.rect(tela, (255,0,0), (100*posx_robo[robo.i], -100*posy_robo[robo.i]+altura, (180/1000)*100, (180/1000)*100))
-        des_bola = pygame.draw.circle(tela, (255,255,255), (100*pos_x[robo.i], -100*pos_y[robo.i]+altura), 5)
+        des_bola = pygame.draw.circle(tela, (255,0,0), (100*pos_x[robo.i], -100*pos_y[robo.i]+altura), 5)
 
         robo.i+=1
         pygame.display.update()
@@ -208,6 +248,8 @@ botao15.place(anchor=CENTER, relx=0.12, rely= 0.1)
 botao16 = Button(janela, text="Distância entre o robô e a bola", width=22, bg="blue", fg="white", command=grafico15)
 botao16.place(anchor=CENTER, relx=0.12, rely=0.15)
 
+botao17 = Button(janela, text="Todos os gráficos", width=22, bg="white", fg="black", command=enviadados2)
+botao17.place(anchor=CENTER, relx=0.12, rely=0.05)
 
 ##############################################################
             # Criação de classes e funções #
@@ -252,7 +294,7 @@ class Robo(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.center = (100*posx_robo[robo.i], -100*posy_robo[robo.i]+600)
-        self.image = self.sprite_robo[0]
+        self.image = pygame.transform.rotate(self.sprite_robo[0], -30)
         
         self.image = pygame.transform.rotate(self.image, angulos_robo[robo.i])
         # self.image = pygame.transform.scale(self.image, (18*10, 18*10))
@@ -279,8 +321,6 @@ class Robo(pygame.sprite.Sprite):
         self.cos = (pos_x[self.i] - self.posx)/self.distancia
         self.sen = (pos_y[self.i] - self.posy)/self.distancia
         self.angulo = math.degrees(math.atan(self.sen/self.cos))
-        
-        
 
 
         #multiplica a aceleracao pelo cos e o seno pra encontrar os componentes do vetor de aceleracao
@@ -413,3 +453,12 @@ print(robo.posx, robo.posy, pos_x[robo.i], pos_y[robo.i], tempo[robo.i], robo.ve
 robo.i = 0
 
 janela.mainloop()
+
+if var_rec2 == True:
+    janela2 = tkinter.Tk()
+    janela2.title("Todos os graficos")
+    janela2.config(bg='black')
+    janela2.geometry("1440x900")
+
+grafico16()
+janela2.mainloop()
