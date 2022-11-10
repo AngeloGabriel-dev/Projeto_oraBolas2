@@ -168,27 +168,30 @@ def anim():
     pygame.display.init()
     largura = 900
     altura = 600
-
+    robo.i = 0
     tela = pygame.display.set_mode((largura, altura))
     relogio = pygame.time.Clock()
 
     while True:
-        if robo.i >= len(posx_robo)-1:
-            break
+        
         relogio.tick(60)
         tela.fill((255,255,255))
-        
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
         todas_as_sprites.draw(tela)
         todas_as_sprites.update()
 
         # des_robo = pygame.draw.rect(tela, (255,0,0), (100*posx_robo[robo.i], -100*posy_robo[robo.i]+altura, (180/1000)*100, (180/1000)*100))
-        des_bola = pygame.draw.circle(tela, (255,0,0), (100*pos_x[robo.i], -100*pos_y[robo.i]+altura), 5)
+        des_bola = pygame.draw.circle(tela, (255,255,255), (100*pos_x[robo.i], -100*pos_y[robo.i]+altura), 5)
 
-        robo.i+=1
+        if robo.i >= len(posx_robo)-1:
+            pass
+        else:
+            robo.i += 1
         pygame.display.update()
     #A janela fecha depois de 3 segundos e não conseguimos rerodar a animação, foi o máximo que consegui até agora com o pygame...
-    pygame.time.wait(3000) 
-    pygame.display.quit()
+    
 
 ##############################################################
                 # Criação da Interface #
@@ -294,7 +297,7 @@ class Robo(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.center = (100*posx_robo[robo.i], -100*posy_robo[robo.i]+600)
-        self.image = pygame.transform.rotate(self.sprite_robo[0], -30)
+        self.image = self.sprite_robo[0]
         
         self.image = pygame.transform.rotate(self.image, angulos_robo[robo.i])
         # self.image = pygame.transform.scale(self.image, (18*10, 18*10))
