@@ -17,6 +17,7 @@ import sys
 #pip install tkinter
 #pip install pygame
 #pip install matplotlib
+#pip install pyinstaller
 
 var_rec = False
 var_rec2 = False
