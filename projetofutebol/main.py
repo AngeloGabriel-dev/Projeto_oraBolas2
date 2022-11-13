@@ -333,8 +333,8 @@ class Robo(pygame.sprite.Sprite):
 
         if self.distancia < 1:
             
-            self.velx -= 0.005*(1/self.distancia)
-            self.vely -= 0.005*(1/self.distancia)
+            self.velx -= 0.003*(1/self.distancia)
+            self.vely -= 0.003*(1/self.distancia)
             
         #essas estruturas condicionais servem pra impedir que a velocidade ultrapasse a velocidade final de 2.8m/s
         # if (2.8*tempo[1] >= (self.velx + self.ax)):
@@ -421,19 +421,38 @@ posy_robo = []
 
 #essa estrutura de repeticao vai passando as posicoes que o robo toma pra dentro de listas
 while True:
-    posx_bola.append(pos_x[robo.i])
-    posy_bola.append(pos_y[robo.i])
-    velx_bola.append((pos_x[robo.i]-pos_x[robo.i-1])/((tempo[robo.i])-(tempo[robo.i-1])))
-    vely_bola.append((pos_y[robo.i]-pos_y[robo.i-1])/((tempo[robo.i])-(tempo[robo.i-1])))
-    acelx_bola.append((velx_bola[robo.i]-velx_bola[robo.i-1])/(tempo[robo.i]-tempo[robo.i-1]))
-    acely_bola.append((vely_bola[robo.i]-vely_bola[robo.i-1])/(tempo[robo.i]-tempo[robo.i-1]))
+    if robo.i>0:    
+       
+        posx_bola.append(pos_x[robo.i])
+        posy_bola.append(pos_y[robo.i]) 
+        velx_bola.append((pos_x[robo.i]-pos_x[robo.i-1])/((tempo[robo.i])-(tempo[robo.i-1])))
+        vely_bola.append((pos_y[robo.i]-pos_y[robo.i-1])/((tempo[robo.i])-(tempo[robo.i-1])))
+                
+        acelx_bola.append((velx_bola[robo.i]-velx_bola[robo.i-1])/(tempo[robo.i]-tempo[robo.i-1]))
+        acely_bola.append((vely_bola[robo.i]-vely_bola[robo.i-1])/(tempo[robo.i]-tempo[robo.i-1]))
+        
+        
 
-    posx_robo.append(robo.posx)
-    posy_robo.append(robo.posy)
-    velx_robo.append((posx_robo[robo.i]-posx_robo[robo.i-1])/((tempo[robo.i])-(tempo[robo.i-1])))
-    vely_robo.append((posy_robo[robo.i]-posy_robo[robo.i-1])/((tempo[robo.i])-(tempo[robo.i-1])))
-    acelx_robo.append(velx_robo[robo.i]/(tempo[robo.i]))
-    acely_robo.append(vely_robo[robo.i]/(tempo[robo.i]))
+        posx_robo.append(robo.posx)
+        posy_robo.append(robo.posy)
+        velx_robo.append((posx_robo[robo.i]-posx_robo[robo.i-1])/((tempo[robo.i])-(tempo[robo.i-1])))
+        vely_robo.append((posy_robo[robo.i]-posy_robo[robo.i-1])/((tempo[robo.i])-(tempo[robo.i-1])))
+        acelx_robo.append((velx_robo[robo.i]-velx_robo[robo.i-1])/(tempo[robo.i]-tempo[robo.i-1]))
+        acely_robo.append((vely_robo[robo.i]-vely_robo[robo.i-1])/(tempo[robo.i]-tempo[robo.i-1]))
+    else:
+        posx_bola.append(pos_x[0])
+        posy_bola.append(pos_y[0])
+        velx_bola.append(0)
+        vely_bola.append(0)
+        acelx_bola.append(0)
+        acely_bola.append(0)
+
+        posx_robo.append(robo.posx)
+        posy_robo.append(robo.posy)
+        velx_robo.append(0)
+        vely_robo.append(0)
+        acelx_robo.append(0)
+        acely_robo.append(0)
 
     distancias.append(robo.distancia)
     
