@@ -258,7 +258,7 @@ botao17.place(anchor=CENTER, relx=0.12, rely=0.05)
 ##############################################################
             # Criação de classes e funções #
 ##############################################################
-
+tempo = []
 class Campo(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -328,8 +328,12 @@ class Robo(pygame.sprite.Sprite):
 
 
         #multiplica a aceleracao pelo cos e o seno pra encontrar os componentes do vetor de aceleracao
-        self.velx = self.cos*0.056
-        self.vely = self.sen*0.056
+        if tempo[self.i] <= 1:
+            self.velx = self.cos*0.056*tempo[self.i]
+            self.vely = self.sen*0.056*tempo[self.i]
+        else:
+            self.velx = self.cos*0.056
+            self.vely = self.sen*0.056
 
         if self.distancia < 1:
             
@@ -395,7 +399,7 @@ trajetoria = open('trajetoriaMeio.txt', 'r')
 lista_pos = []
 pos_x = []
 pos_y = []
-tempo = []
+
 tempo_robo = []
 
 for line in trajetoria:
@@ -455,7 +459,7 @@ while True:
         acely_robo.append(0)
 
     distancias.append(robo.distancia)
-    
+    print((math.sqrt((robo.velx**2)+(robo.vely**2))/0.02),tempo[robo.i])
     tempo_robo.append(tempo[robo.i])
     if robo.posx > pos_x[robo.i]:
         robo.angulo -= 180
@@ -472,6 +476,7 @@ while True:
         break
 
 print(robo.posx, robo.posy, pos_x[robo.i], pos_y[robo.i], tempo[robo.i], robo.velx/0.056, robo.vely/0.056)
+
 
 robo.i = 0
 
