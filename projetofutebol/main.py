@@ -149,7 +149,7 @@ def grafico16():
     graficofinal(tempo_robo, vely_bola, "Velocidade(y) da Bola", 'blue', "t/s", "v(y)", 0.13, 0.365)
     graficofinal(tempo_robo, acelx_bola, "Aceleração(x) da Bola", 'blue', "t/s", "a(x)", 0.38, 0.365)
     graficofinal(tempo_robo, acely_bola, "Aceleração(y) da Bola", 'blue', "t/s", "a(y)", 0.63, 0.365)
-    graficofinal(posx_robo, posy_robo, "Trajetória do Robô", 'purple', "x", "y", 0.875, 0.36)
+    graficofinal(posx_robo, posy_robo, "Trajetória do Robô", 'purple', "x", "y", 0.875, 0.365)
 
     graficofinal(tempo_robo, posx_robo, "Posição(x) do Robô", 'purple', "t/s", "x", 0.13, 0.61)
     graficofinal(tempo_robo, posy_robo, "Posição(y) do Robô", 'purple', "t/s", "y", 0.38, 0.61)
