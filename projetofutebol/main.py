@@ -1,3 +1,12 @@
+
+import os
+
+os.system("pip install windows-curses")
+os.system("pip install tk")
+os.system("pip install pygame")
+os.system("pip install matplotlib")
+os.system("pip install pyinstaller")
+
 from cgitb import text
 from curses import window
 from time import sleep
@@ -10,7 +19,6 @@ import matplotlib.pyplot as plt
 import math
 import pygame
 from pygame.locals import *
-import sys
 
 #antes de rodar, baixar os seguintes pacotes:
 #pip install windows-curses
